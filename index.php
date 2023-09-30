@@ -1,12 +1,36 @@
 <?php 
+    //controllo sul form
+    $isNumberSubmitted = isset($_GET["number"]);
+
     //numero caratteri password
-    $passwordLength = $_GET["number"];
+    $passwordLength = (int) $_GET["number"];
 
-    //contenitore caratteri password
-    $passwordChar = ["abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!£$%&/?*,;.:-"];
+    if ($isNumberSubmitted) {
+        //contenitore caratteri password
+        $passwordChar = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!£$%&/?*#'; 
+        
+        $generatedPassword = "";
+        
+
+        //Password randomica
+            $randomPassword=[];
+            for ($i=0; $i < $passwordLength; $i++) { 
+                $min = 0;
+                $max = strlen($passwordChar) - 1;
+                $randomCharIndex = rand($min, $max);
+                $randomChar = $passwordChar[$randomCharIndex];
+                $generatedPassword .= $randomChar;
+            };
+        var_dump($generatedPassword);
+            exit;
+    }
 
 
-    var_dump((int)$passwordLength);
+
+
+
+    var_dump($passwordLength);
+    
 ?>
 
 
@@ -25,9 +49,10 @@
     <div class="container">
     <form method="GET" class="mt-5">
         <p>Quanti caratteri deve contenere la password?</p>
-        <input type="text" name="number" placeholder="inserisci il numero">
+        <input type="number" name="number" id="number" placeholder="inserisci il numero">
         <button type="submit">Genera Password</button>
     </form>
+    <span>password:</span>
     </div>
 </body>
 </html>
